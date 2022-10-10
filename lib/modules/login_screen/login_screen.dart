@@ -1,18 +1,17 @@
-
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shopapp/layout/layout_screen.dart';
 import 'package:shopapp/modules/login_screen/cubit/cubit.dart';
 import 'package:shopapp/modules/login_screen/cubit/states.dart';
+import 'package:shopapp/modules/register_screen/register_Screen.dart';
 import 'package:shopapp/shared/components/components.dart';
+import 'package:shopapp/shared/components/constants.dart';
 import 'package:shopapp/shared/network/local/cache_helper.dart';
 
 class LoginScreen extends StatelessWidget {
   var formKey = GlobalKey<FormState>();
-
 
   @override
   Widget build(BuildContext context) {
@@ -23,18 +22,18 @@ class LoginScreen extends StatelessWidget {
       create: (BuildContext context) => LoginCubit(),
       child: BlocConsumer<LoginCubit, LoginStates>(
         listener: (context, state) {
-          if(state is LoginSuccessState){
-            if(state.loginModel.status){
-
+          if (state is LoginSuccessState) {
+            if (state.loginModel.status) {
               print(state.loginModel.message);
               print(state.loginModel.data.token);
-      CacheHelper.saveData(key: 'token', value:state.loginModel.data.token );
-      navigateAndFinish(context, LayoutScreen());
-
-            }else{
-       showToast(msg:state.loginModel.message
-           , state: ToastStates.ERROR);
-
+              CacheHelper.saveData(
+                  key: 'token', value: state.loginModel.data.token,).then((value) {
+                token = state.loginModel.data.token;
+                navigateAndFinish(context, LayoutScreen());
+              });
+            } else {
+              showToast(
+                  msg: state.loginModel.message, state: ToastStates.ERROR);
             }
           }
         },
@@ -43,10 +42,7 @@ class LoginScreen extends StatelessWidget {
             appBar: AppBar(
               title: Text(
                 'LOGIN',
-                style: Theme
-                    .of(context)
-                    .textTheme
-                    .headline5,
+                style: Theme.of(context).textTheme.headline5,
               ),
             ),
             body: Center(
@@ -58,16 +54,11 @@ class LoginScreen extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-
                         Text(
                           'login now to browse or hot offers',
-                          style: Theme
-                              .of(context)
-                              .textTheme
-                              .bodyText1
-                              .copyWith(
-                            color: Colors.grey,
-                          ),
+                          style: Theme.of(context).textTheme.bodyText1.copyWith(
+                                color: Colors.grey,
+                              ),
                         ),
                         SizedBox(
                           height: 20.0,
@@ -90,16 +81,15 @@ class LoginScreen extends StatelessWidget {
                           controller: passwordController,
                           type: TextInputType.visiblePassword,
                           suffix: LoginCubit.get(context).suffix,
-                          onSubmit: (value){
-                            if(formKey.currentState.validate()){
+                          onSubmit: (value) {
+                            if (formKey.currentState.validate()) {
                               LoginCubit.get(context).userLogin(
                                   email: emailController.text,
                                   password: passwordController.text);
                             }
                           },
-                          isPassword: LoginCubit.get(context).isPassword ,
-                          suffixOnPressed: ()
-                          {
+                          isPassword: LoginCubit.get(context).isPassword,
+                          suffixOnPressed: () {
                             LoginCubit.get(context).changePasswordVisibility();
                           },
                           validate: (String value) {
@@ -115,17 +105,16 @@ class LoginScreen extends StatelessWidget {
                         ),
                         ConditionalBuilder(
                           condition: state is! LoginLoadingState,
-                          builder: (context) =>
-                              defaultButton(function: () {
-                                if(formKey.currentState.validate()){
+                          builder: (context) => defaultButton(
+                              function: () {
+                                if (formKey.currentState.validate()) {
                                   LoginCubit.get(context).userLogin(
                                       email: emailController.text,
                                       password: passwordController.text);
                                 }
-
                               },
-                                  text: 'Login',
-                                  isUpperCase: true),
+                              text: 'Login',
+                              isUpperCase: true),
                           fallback: (context) =>
                               Center(child: CircularProgressIndicator()),
                         ),
@@ -134,13 +123,11 @@ class LoginScreen extends StatelessWidget {
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
-                          children:
-                          [
+                          children: [
                             Text('Don\'t have an account? '),
                             defaultTextButton(
                               function: () {
-                                navigateTo(context,
-                                    LoginScreen());
+                                navigateTo(context, RegisterScreen());
                               },
                               text: 'Register',
                             ),

@@ -61,7 +61,7 @@ class MyApp extends StatelessWidget {
             ),
         ),
         BlocProvider(
-          create: (BuildContext context) => LayoutCubit()..getHomeData()..getCategories() ..getFavorites(),
+          create: (BuildContext context) => LayoutCubit()..getHomeData()..getCategories() ..getFavorites()..getUserData(),
         ),
       ],
 

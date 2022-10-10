@@ -1,4 +1,5 @@
 import 'package:shopapp/models/change_favorites_model.dart';
+import 'package:shopapp/models/login_model.dart';
 
 abstract class LayoutStates {}
 
@@ -31,3 +32,24 @@ class LayoutLoadingGetFavoritesState extends LayoutStates {}
 class LayoutSuccessGetFavoritesState extends LayoutStates {}
 
 class LayoutErrorGetFavoritesState extends LayoutStates {}
+
+class LayoutLoadingUserDataState extends LayoutStates {}
+
+class LayoutSuccessUserDataState extends LayoutStates {
+  final LoginModel loginModel;
+
+  LayoutSuccessUserDataState(this.loginModel);
+}
+
+class LayoutErrorUserDataState extends LayoutStates {}
+
+
+class LayoutLoadingUpdateUserState extends LayoutStates {}
+
+class LayoutSuccessUpdateUserState extends LayoutStates {
+  final LoginModel loginModel;
+
+  LayoutSuccessUpdateUserState(this.loginModel);
+}
+
+class LayoutErrorUpdateUserState extends LayoutStates {}

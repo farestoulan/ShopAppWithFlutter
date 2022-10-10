@@ -6,6 +6,7 @@ import 'package:shopapp/layout/cubit/states_layout.dart';
 import 'package:shopapp/models/categories_model.dart';
 import 'package:shopapp/models/favorites_model.dart';
 import 'package:shopapp/models/home_model.dart';
+import 'package:shopapp/models/login_model.dart';
 import 'package:shopapp/modules/categories/categories_screen.dart';
 import 'package:shopapp/modules/favorites/favorites_screen.dart';
 import 'package:shopapp/modules/products/products_screen.dart';
@@ -112,6 +113,51 @@ class LayoutCubit extends Cubit<LayoutStates> {
     }).catchError((error) {
       print(error.toString());
       emit(LayoutErrorGetFavoritesState());
+    });
+  }
+
+
+  LoginModel userModel;
+  void getUserData() {
+    emit(LayoutLoadingUserDataState());
+    DioHelper.getData(
+      url: PROFILE,
+      token: token,
+    ).then((value) {
+      userModel = LoginModel.fromJson(value.data);
+      print(userModel.data.name);
+      emit(LayoutSuccessUserDataState(userModel));
+    }).catchError((error) {
+      print(error.toString());
+      emit(LayoutErrorGetFavoritesState());
+    });
+  }
+
+
+
+
+
+  void updateUserData({
+  @required String name,
+  @required String email,
+  @required String phone,
+}) {
+    emit(LayoutLoadingUpdateUserState());
+    DioHelper.putData(
+      url: UPDATE_PROFILE,
+      token: token,
+      data: {
+        'name' :name,
+        'email' :email,
+        'phone' :phone,
+      },
+    ).then((value) {
+      userModel = LoginModel.fromJson(value.data);
+      print(userModel.data.name);
+      emit(LayoutSuccessUpdateUserState(userModel));
+    }).catchError((error) {
+      print(error.toString());
+      emit(LayoutErrorUpdateUserState());
     });
   }
 }
