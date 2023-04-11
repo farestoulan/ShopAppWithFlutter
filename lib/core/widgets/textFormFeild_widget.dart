@@ -1,26 +1,36 @@
 import 'package:flutter/material.dart';
 
 Widget defaultFormField({
-  @required TextEditingController controller,
-  @required TextInputType type,
-  Function onSubmit,
-  Function onChange,
-  Function onTap,
+  required TextEditingController controller,
+  required TextInputType type,
+  required Function onSubmit,
+  required Function onChange,
+  required Function onTap,
   bool isClickable = true,
   bool isPassword = false,
-  @required Function validate,
-  @required String label,
-  @required IconData prefix,
-  IconData suffix,
-  Function suffixOnPressed,
+  //required Function validate,
+  required String msg,
+  required String label,
+  required IconData prefix,
+  IconData? suffix,
+  Function? suffixOnPressed,
 }) =>
     TextFormField(
       controller: controller,
       keyboardType: type,
-      onFieldSubmitted: onSubmit,
-      onChanged: onChange,
-      validator: validate,
-      onTap: onTap,
+      onFieldSubmitted: (string) {
+        onSubmit();
+      },
+      onChanged: (string) {
+        onChange();
+      },
+      validator: (String? string) {
+        if (string!.isEmpty) {
+          return msg;
+        }
+        return null;
+      },
+      onTap: onTap(),
       enabled: isClickable,
       obscureText: isPassword,
       decoration: InputDecoration(
@@ -30,7 +40,9 @@ Widget defaultFormField({
         ),
         suffixIcon: suffix != null
             ? IconButton(
-                onPressed: suffixOnPressed,
+                onPressed: () {
+                  suffixOnPressed!();
+                },
                 icon: Icon(
                   suffix,
                 ),

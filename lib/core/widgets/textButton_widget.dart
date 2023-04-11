@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 
 Widget defaultTextButton({
-  @required Function function,
-  @required String text,
+  required Function function,
+  required String text,
 }) =>
     TextButton(
-      onPressed: function,
+      onPressed: () {
+        function();
+      },
       child: Text(
         text.toUpperCase(),
       ),

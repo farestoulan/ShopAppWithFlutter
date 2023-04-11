@@ -20,9 +20,9 @@ class SettingScreen extends StatelessWidget {
       listener: (context, state) {},
       builder: (context, state) {
         var model = LayoutCubit.get(context).userModel;
-        nameController.text = model.data.name;
-        emailController.text = model.data.email;
-        phoneController.text = model.data.phone;
+        nameController.text = model!.data!.name!;
+        emailController.text = model.data!.email!;
+        phoneController.text = model.data!.phone!;
         return ConditionalBuilder(
           condition: LayoutCubit.get(context).userModel != null,
           builder: (context) => Padding(
@@ -38,42 +38,54 @@ class SettingScreen extends StatelessWidget {
                       height: 20.0,
                     ),
                     defaultFormField(
+                        onTap: () {},
+                        onChange: () {},
+                        onSubmit: () {},
                         controller: nameController,
                         type: TextInputType.name,
-                        validate: (String value) {
-                          if (value.isEmpty) {
-                            return 'name must not be empty';
-                          }
-                          return null;
-                        },
+                        msg: 'name must not be empty',
+                        // validate: (String value) {
+                        //   if (value.isEmpty) {
+                        //     return 'name must not be empty';
+                        //   }
+                        //   return null;
+                        // },
                         label: 'Name',
                         prefix: Icons.person),
                     SizedBox(
                       height: 20.0,
                     ),
                     defaultFormField(
+                        onTap: () {},
+                        onChange: () {},
+                        onSubmit: () {},
                         controller: emailController,
                         type: TextInputType.emailAddress,
-                        validate: (String value) {
-                          if (value.isEmpty) {
-                            return 'email must not be empty';
-                          }
-                          return null;
-                        },
+                        msg: 'email must not be empty',
+                        // validate: (String value) {
+                        //   if (value.isEmpty) {
+                        //     return 'email must not be empty';
+                        //   }
+                        //   return null;
+                        // },
                         label: 'Email',
                         prefix: Icons.email),
                     SizedBox(
                       height: 20.0,
                     ),
                     defaultFormField(
+                        onTap: () {},
+                        onChange: () {},
+                        onSubmit: () {},
                         controller: phoneController,
                         type: TextInputType.phone,
-                        validate: (String value) {
-                          if (value.isEmpty) {
-                            return 'phone must not be empty';
-                          }
-                          return null;
-                        },
+                        msg: 'phone must not be empty',
+                        // validate: (String value) {
+                        //   if (value.isEmpty) {
+                        //     return 'phone must not be empty';
+                        //   }
+                        //   return null;
+                        // },
                         label: 'Phone',
                         prefix: Icons.phone),
                     SizedBox(
@@ -81,7 +93,7 @@ class SettingScreen extends StatelessWidget {
                     ),
                     defaultButton(
                         function: () {
-                          if (formKey.currentState.validate()) {
+                          if (formKey.currentState!.validate()) {
                             LayoutCubit.get(context).updateUserData(
                                 name: nameController.text,
                                 email: emailController.text,

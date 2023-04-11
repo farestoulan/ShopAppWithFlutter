@@ -84,7 +84,7 @@ Widget buildListProduct(
                         icon: CircleAvatar(
                           radius: 15.0,
                           backgroundColor:
-                              LayoutCubit.get(context).favorites[model.id]
+                              LayoutCubit.get(context).favorites[model.id]!
                                   ? defaultColor
                                   : Colors.grey,
                           child: Icon(

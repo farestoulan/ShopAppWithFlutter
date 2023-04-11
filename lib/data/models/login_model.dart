@@ -1,26 +1,26 @@
 class LoginModel {
-  bool status;
+  bool? status;
 
-  String message;
+  String? message;
 
-  UserData data;
+  UserData? data;
 
   LoginModel.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     message = json['message'];
-    data = json['data'] != null ? UserData.fromJson(json['data']) :null;
+    data = json['data'] != null ? UserData.fromJson(json['data']) : null;
   }
 }
 
 class UserData {
-  int id;
-  String name;
-  String email;
-  String phone;
-  String image;
-  int points;
-  int credit;
-  String token;
+  int? id;
+  String? name;
+  String? email;
+  String? phone;
+  String? image;
+  int? points;
+  int? credit;
+  String? token;
 
   // UserData({
   //   this.id,

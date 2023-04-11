@@ -1,5 +1,5 @@
-import '../../models/change_favorites_model.dart';
-import '../../models/login_model.dart';
+import '../../data/models/change_favorites_model.dart';
+import '../../data/models/login_model.dart';
 
 abstract class LayoutStates {}
 

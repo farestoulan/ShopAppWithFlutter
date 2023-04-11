@@ -10,7 +10,7 @@ class AppCubit extends Cubit<AppStates> {
 
   static AppCubit get(context) => BlocProvider.of(context);
 
-  Database database;
+  Database? database;
   List<Map> newTasks = [];
   List<Map> doneTasks = [];
   List<Map> archivedTasks = [];
@@ -40,25 +40,25 @@ class AppCubit extends Cubit<AppStates> {
     });
   }
 
-  insertToDatabase({
-    @required String title,
-    @required String time,
-    @required String date,
-  }) async {
-    await database.transaction((txn) {
-      txn
-          .rawInsert(
-              'INSERT INTO tasks(title , time , date , status) VALUES ("$title", "$time" , "$date" , "New")')
-          .then((value) {
-        print('$value inserted successfully');
-        emit(AppInsertDatabaseState());
-        getDataFromDatabase(database);
-      }).catchError((error) {
-        print('Error When Inserting new Record ${error.toString()}');
-      });
-      return null;
-    });
-  }
+//  insertToDatabase({
+//     required String title,
+//     required String time,
+//     required String date,
+//   }) async {
+//     await database!.transaction((txn) {
+//       txn
+//           .rawInsert(
+//               'INSERT INTO tasks(title , time , date , status) VALUES ("$title", "$time" , "$date" , "New")')
+//           .then((value) {
+//         print('$value inserted successfully');
+//         emit(AppInsertDatabaseState());
+//         getDataFromDatabase(database);
+//       }).catchError((error) {
+//         print('Error When Inserting new Record ${error.toString()}');
+//       });
+//       return null;
+//     });
+//   }
 
   void getDataFromDatabase(database) {
     newTasks = [];
@@ -82,10 +82,10 @@ class AppCubit extends Cubit<AppStates> {
   }
 
   void updateData({
-    @required String status,
-    @required int id,
+    required String status,
+    required int id,
   }) async {
-    database.rawUpdate('UPDATE tasks SET status = ? WHERE id = ?',
+    database!.rawUpdate('UPDATE tasks SET status = ? WHERE id = ?',
         ['$status', id]).then((value) {
       getDataFromDatabase(database);
       emit(AppUpdateDatabaseState());
@@ -93,9 +93,9 @@ class AppCubit extends Cubit<AppStates> {
   }
 
   void deleteData({
-    @required int id,
+    required int id,
   }) async {
-    database.rawDelete('DELETE FROM tasks WHERE id = ?', [id]).then((value) {
+    database!.rawDelete('DELETE FROM tasks WHERE id = ?', [id]).then((value) {
       getDataFromDatabase(database);
       emit(AppDeleteDatabaseState());
     });
@@ -105,8 +105,8 @@ class AppCubit extends Cubit<AppStates> {
   IconData fabIcon = Icons.edit;
 
   void changeBottomSheetState({
-    @required bool isShow,
-    @required IconData icon,
+    required bool isShow,
+    required IconData icon,
   }) {
     isBottomSheetShown = isShow;
     fabIcon = icon;
@@ -115,7 +115,7 @@ class AppCubit extends Cubit<AppStates> {
   }
 
   bool isDark = true;
-  void changeAppMode({bool fromShared}) {
+  void changeAppMode({bool? fromShared}) {
     if (fromShared != null) {
       isDark = fromShared;
       emit(AppChangeModeState());

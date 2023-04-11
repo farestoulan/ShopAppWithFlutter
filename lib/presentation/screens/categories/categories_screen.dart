@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shopapp/business_logic/layout_cubit/cubit_layout.dart';
 import 'package:shopapp/business_logic/layout_cubit/states_layout.dart';
 
-import '../../../models/categories_model.dart';
+import '../../../data/models/categories_model.dart';
 
 class CategoriesScreen extends StatelessWidget {
   @override
@@ -13,10 +13,10 @@ class CategoriesScreen extends StatelessWidget {
       builder: (context, state) {
         return ListView.separated(
             itemBuilder: (context, index) => buildCatItem(
-                LayoutCubit.get(context).categoriesModel.data.data[index]),
+                LayoutCubit.get(context).categoriesModel!.data!.data[index]),
             separatorBuilder: (context, index) => const Divider(),
             itemCount:
-                LayoutCubit.get(context).categoriesModel.data.data.length);
+                LayoutCubit.get(context).categoriesModel!.data!.data.length);
       },
     );
   }
@@ -28,7 +28,7 @@ Widget buildCatItem(DataModel dataModel) => Padding(
         children: [
           Image(
             image: NetworkImage(
-              dataModel.image,
+              dataModel.image.toString(),
             ),
             width: 120.0,
             height: 120.0,
@@ -38,7 +38,7 @@ Widget buildCatItem(DataModel dataModel) => Padding(
             width: 18.0,
           ),
           Text(
-            dataModel.name,
+            dataModel.name.toString(),
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 18.0,

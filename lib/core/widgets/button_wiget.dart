@@ -5,14 +5,16 @@ Widget defaultButton({
   Color background = Colors.blue,
   bool isUpperCase = true,
   double radius = 10.0,
-  @required Function function,
-  @required String text,
+  required Function function,
+  required String text,
 }) =>
     Container(
       width: width,
       height: 40.0,
       child: MaterialButton(
-        onPressed: function,
+        onPressed: () {
+          function();
+        },
         child: Text(
           isUpperCase ? text.toUpperCase() : text,
           style: TextStyle(

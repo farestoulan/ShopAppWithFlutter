@@ -8,19 +8,23 @@ import 'package:shopapp/business_logic/layout_cubit/states_layout.dart';
 import '../../../core/utils/styles/colors.dart';
 import '../../../core/widgets/showToast_widget.dart';
 
-import '../../../models/categories_model.dart';
-import '../../../models/home_model.dart';
+import '../../../data/models/categories_model.dart';
+import '../../../data/models/home_model.dart';
 
-class ProductsScreen extends StatelessWidget {
-  const ProductsScreen({Key key}) : super(key: key);
+class ProductsScreen extends StatefulWidget {
+  @override
+  State<ProductsScreen> createState() => _ProductsScreenState();
+}
 
+class _ProductsScreenState extends State<ProductsScreen> {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<LayoutCubit, LayoutStates>(
       listener: (context, state) {
         if (state is LayoutSuccessChangeFavoritesState) {
-          if (!state.model.status) {
-            showToast(msg: state.model.message, state: ToastStates.ERROR);
+          if (state.model.status != null) {
+            showToast(
+                msg: state.model.message.toString(), state: ToastStates.ERROR);
           }
         }
       },
@@ -38,13 +42,13 @@ class ProductsScreen extends StatelessWidget {
   }
 
   Widget productBuilder(
-          HomeModel model, CategoriesModel categoriesModel, context) =>
+          HomeModel? model, CategoriesModel? categoriesModel, context) =>
       SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             CarouselSlider(
-              items: model.data.banners
+              items: model!.data!.banners
                   .map(
                     (e) => Image(
                       image: NetworkImage('${e.image}'),
@@ -89,11 +93,11 @@ class ProductsScreen extends StatelessWidget {
                       physics: BouncingScrollPhysics(),
                       scrollDirection: Axis.horizontal,
                       itemBuilder: (context, index) =>
-                          buildCategoryItem(categoriesModel.data.data[index]),
+                          buildCategoryItem(categoriesModel.data!.data[index]),
                       separatorBuilder: (context, index) => SizedBox(
                         width: 20.0,
                       ),
-                      itemCount: categoriesModel.data.data.length,
+                      itemCount: categoriesModel!.data!.data.length,
                     ),
                   ),
                   SizedBox(
@@ -122,9 +126,9 @@ class ProductsScreen extends StatelessWidget {
                 crossAxisSpacing: 5.0,
                 childAspectRatio: 1 / 1.74,
                 children: List.generate(
-                  model.data.products.length,
+                  model.data!.products.length,
                   (index) =>
-                      buildGridProduct(model.data.products[index], context),
+                      buildGridProduct(model.data!.products[index], context),
                 ),
               ),
             )
@@ -137,7 +141,7 @@ Widget buildCategoryItem(DataModel dataModel) => Stack(
       alignment: AlignmentDirectional.bottomCenter,
       children: [
         Image(
-          image: NetworkImage(dataModel.image),
+          image: NetworkImage(dataModel.image.toString()),
           height: 100.0,
           width: 100.0,
           fit: BoxFit.cover,
@@ -146,7 +150,7 @@ Widget buildCategoryItem(DataModel dataModel) => Stack(
           color: Colors.black.withOpacity(.7),
           width: 100.0,
           child: Text(
-            dataModel.name,
+            dataModel.name.toString(),
             textAlign: TextAlign.center,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
@@ -167,7 +171,7 @@ Widget buildGridProduct(ProductModel productModel, context) => Container(
             alignment: AlignmentDirectional.bottomStart,
             children: [
               Image(
-                image: NetworkImage(productModel.image),
+                image: NetworkImage(productModel.image.toString()),
                 width: double.infinity,
                 height: 200.0,
               ),
@@ -191,7 +195,7 @@ Widget buildGridProduct(ProductModel productModel, context) => Container(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  productModel.name,
+                  productModel.name.toString(),
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
@@ -225,12 +229,12 @@ Widget buildGridProduct(ProductModel productModel, context) => Container(
                     IconButton(
                       onPressed: () {
                         LayoutCubit.get(context)
-                            .changeFavorites(productModel.id);
+                            .changeFavorites(productModel.id!);
                       },
                       icon: CircleAvatar(
                         radius: 15.0,
                         backgroundColor:
-                            LayoutCubit.get(context).favorites[productModel.id]
+                            LayoutCubit.get(context).favorites[productModel.id]!
                                 ? defaultColor
                                 : Colors.grey,
                         child: Icon(

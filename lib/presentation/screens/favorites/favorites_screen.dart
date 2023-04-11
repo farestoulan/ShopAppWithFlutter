@@ -5,11 +5,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../business_logic/layout_cubit/cubit_layout.dart';
 import '../../../business_logic/layout_cubit/states_layout.dart';
 import '../../../core/utils/styles/colors.dart';
-import '../../../models/favorites_model.dart';
+import '../../../data/models/favorites_model.dart';
 
 class FavoritesScreen extends StatelessWidget {
-  const FavoritesScreen({Key key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<LayoutCubit, LayoutStates>(
@@ -19,11 +17,14 @@ class FavoritesScreen extends StatelessWidget {
             condition: state is! LayoutLoadingGetFavoritesState,
             builder: (context) => ListView.separated(
                 itemBuilder: (context, index) => buildFavItem(
-                    LayoutCubit.get(context).favoritesModel.data.data[index],
+                    LayoutCubit.get(context).favoritesModel!.data!.data![index],
                     context),
                 separatorBuilder: (context, index) => const Divider(),
-                itemCount:
-                    LayoutCubit.get(context).favoritesModel.data.data.length),
+                itemCount: LayoutCubit.get(context)
+                    .favoritesModel!
+                    .data!
+                    .data!
+                    .length),
             fallback: (context) => Center(child: CircularProgressIndicator()),
           );
         });
@@ -39,12 +40,12 @@ class FavoritesScreen extends StatelessWidget {
                 alignment: AlignmentDirectional.bottomStart,
                 children: [
                   Image(
-                    image: NetworkImage(favoritesData.product.image),
+                    image: NetworkImage(favoritesData.product!.image!),
                     height: 150.0,
                     width: 150,
                     fit: BoxFit.cover,
                   ),
-                  if (favoritesData.product.discount != 0)
+                  if (favoritesData.product!.discount != 0)
                     Container(
                       color: Colors.red,
                       padding: EdgeInsets.symmetric(horizontal: 7.0),
@@ -66,7 +67,7 @@ class FavoritesScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      favoritesData.product.name,
+                      favoritesData.product!.name!,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
@@ -79,7 +80,7 @@ class FavoritesScreen extends StatelessWidget {
                     Row(
                       children: [
                         Text(
-                          favoritesData.product.price.toString(),
+                          favoritesData.product!.price.toString(),
                           style: TextStyle(
                             fontSize: 13.0,
                             color: defaultColor,
@@ -88,9 +89,9 @@ class FavoritesScreen extends StatelessWidget {
                         SizedBox(
                           width: 5.0,
                         ),
-                        if (favoritesData.product.discount != 0)
+                        if (favoritesData.product!.discount != 0)
                           Text(
-                            favoritesData.product.oldPrice.toString(),
+                            favoritesData.product!.oldPrice.toString(),
                             style: TextStyle(
                               fontSize: 12.0,
                               color: Colors.grey,
@@ -101,12 +102,13 @@ class FavoritesScreen extends StatelessWidget {
                         IconButton(
                           onPressed: () {
                             LayoutCubit.get(context)
-                                .changeFavorites(favoritesData.product.id);
+                                .changeFavorites(favoritesData.product!.id!);
                           },
                           icon: CircleAvatar(
                             radius: 15.0,
-                            backgroundColor: LayoutCubit.get(context)
-                                    .favorites[favoritesData.product.id]
+                            backgroundColor: LayoutCubit.get(context).favorites[
+                                        favoritesData.product!.id!] !=
+                                    null
                                 ? defaultColor
                                 : Colors.grey,
                             child: Icon(
