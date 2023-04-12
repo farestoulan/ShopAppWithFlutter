@@ -1,12 +1,15 @@
-import 'package:shopapp/presentation/screens/login_screen/login_screen.dart';
+import 'package:flutter/material.dart';
 import 'package:shopapp/core/network/local/cache_helper.dart';
-
-import '../../config/routes/routes.dart';
+import '../../config/routes/app_routes.dart';
 
 void signOut(context) {
   CacheHelper.removeData(key: 'token').then((value) {
     if (value) {
-      navigateAndFinish(context, LoginScreen());
+      Navigator.of(context).pushNamedAndRemoveUntil(
+          Routes.loginScreen, (Route<dynamic> route) => false);
+      //Navigator.pushNamed(context,Routes.registerScreen);
+
+      //    navigateAndFinish(context, LoginScreen());
     }
   });
 }

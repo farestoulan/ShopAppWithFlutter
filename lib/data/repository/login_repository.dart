@@ -1,4 +1,5 @@
-import 'package:dio/dio.dart';
+import 'dart:convert';
+
 import '../models/login_model.dart';
 import '../web_services/login_services.dart';
 
@@ -10,9 +11,10 @@ class LoginRepository {
   Future<LoginModel?> userLogin(
       {required String email, required String password}) async {
     try {
-      Response? response =
+      var response =
           await loginServices.userLogin(email: email, password: password);
-      return loginModel = LoginModel.fromJson(response!.data);
+      Map<String, dynamic> valueMap = json.decode(response!.body);
+      return loginModel = LoginModel.fromJson(valueMap);
     } catch (e) {
       print(e.toString());
       return null;

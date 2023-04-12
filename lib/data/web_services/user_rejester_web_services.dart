@@ -1,14 +1,13 @@
-import 'package:dio/dio.dart';
-import 'package:shopapp/data/web_services/products_web_servises.dart';
-
+import '../../core/network/remot/http_services.dart';
 import '../../core/utils/end_points.dart';
+import 'package:http/http.dart' as http;
 
 class UserRejesterServices {
   final ProductsWebServices productsWebServices;
 
   UserRejesterServices({required this.productsWebServices});
 
-  Future<Response?> userRegister(
+  Future<http.Response?> userRegister(
       {required String name,
       required String email,
       required String password,

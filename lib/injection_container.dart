@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -9,13 +11,13 @@ import 'package:shopapp/data/web_services/layout_services.dart';
 import 'package:shopapp/data/web_services/login_services.dart';
 import 'business_logic/register_cubit/cubit.dart';
 import 'core/cubit/cubit.dart';
+import 'core/network/remot/http_services.dart';
 import 'data/repository/login_repository.dart';
 import 'data/repository/user_rejester_repository.dart';
 import 'data/web_services/change_favorites_services.dart';
 import 'data/web_services/get_categories_services.dart';
 import 'data/web_services/get_favorites_services.dart';
 import 'data/web_services/get_profile_services.dart';
-import 'data/web_services/products_web_servises.dart';
 import 'data/web_services/update_profile_services.dart';
 import 'data/web_services/user_rejester_web_services.dart';
 
@@ -69,12 +71,13 @@ Future<void> init() async {
   //! External
   final sharedPreferences = await SharedPreferences.getInstance();
   sl.registerLazySingleton(() => sharedPreferences);
-  sl.registerLazySingleton(() => LogInterceptor(
-      request: true,
-      requestBody: true,
-      requestHeader: true,
-      responseBody: true,
-      responseHeader: true,
-      error: true));
-  sl.registerLazySingleton(() => Dio());
+  // sl.registerLazySingleton(() => LogInterceptor(
+  //     request: true,
+  //     requestBody: true,
+  //     requestHeader: true,
+  //     responseBody: true,
+  //     responseHeader: true,
+  //     error: true));
+  // sl.registerLazySingleton(() => Dio());
+  sl.registerLazySingleton(() => HttpClient());
 }

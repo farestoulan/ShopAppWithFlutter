@@ -1,6 +1,7 @@
-import 'package:dio/dio.dart';
-import 'package:shopapp/data/models/home_model.dart';
+import 'dart:convert';
 
+import 'package:shopapp/data/models/home_model.dart';
+import '../../core/network/remot/http_services.dart';
 import '../models/categories_model.dart';
 import '../models/change_favorites_model.dart';
 import '../models/favorites_model.dart';
@@ -10,7 +11,6 @@ import '../web_services/get_categories_services.dart';
 import '../web_services/get_favorites_services.dart';
 import '../web_services/get_profile_services.dart';
 import '../web_services/layout_services.dart';
-import '../web_services/products_web_servises.dart';
 import '../web_services/update_profile_services.dart';
 
 class LayoutRepository {
@@ -39,10 +39,10 @@ class LayoutRepository {
   Future<ChangeFavoritesModel?> changeFavorites(
       {required int productID}) async {
     try {
-      Response? response =
+      var response =
           await changeFavoritsServices.changeFavorites(productID: productID);
-      return changeFavoritesModel =
-          ChangeFavoritesModel.fromJson(response!.data);
+      Map<String, dynamic> valueMap = json.decode(response!.body);
+      return changeFavoritesModel = ChangeFavoritesModel.fromJson(valueMap);
     } catch (e) {
       print(e.toString());
       return null;
@@ -51,8 +51,9 @@ class LayoutRepository {
 
   Future<FavoritesModel?> getFavorites() async {
     try {
-      Response? response = await getFavoritesServices.getFavorites();
-      return favoritesModel = FavoritesModel.fromJson(response!.data);
+      var response = await getFavoritesServices.getFavorites();
+      Map<String, dynamic> valueMap = json.decode(response!.body);
+      return favoritesModel = FavoritesModel.fromJson(valueMap);
     } catch (e) {
       print(e.toString());
       return null;
@@ -61,8 +62,9 @@ class LayoutRepository {
 
   Future<LoginModel?> getUserData() async {
     try {
-      Response? response = await getProfileServices.getUserData();
-      return userModel = LoginModel.fromJson(response!.data);
+      var response = await getProfileServices.getUserData();
+      Map<String, dynamic> valueMap = json.decode(response!.body);
+      return userModel = LoginModel.fromJson(valueMap);
     } catch (e) {
       print(e.toString());
       return null;
@@ -71,8 +73,9 @@ class LayoutRepository {
 
   Future<HomeModel?> getHomeData() async {
     try {
-      Response? response = await layoutWebServices.getHomeData();
-      return homeModel = HomeModel.fromJson(response!.data);
+      var response = await layoutWebServices.getHomeData();
+      Map<String, dynamic> valueMap = json.decode(response!.body);
+      return homeModel = HomeModel.fromJson(valueMap);
     } catch (e) {
       print(e.toString());
       return null;
@@ -81,8 +84,9 @@ class LayoutRepository {
 
   Future<CategoriesModel?> getCategories() async {
     try {
-      Response? response = await getCategoriesServices.getCategories();
-      return categoriesModel = CategoriesModel.fromJson(response!.data);
+      var response = await getCategoriesServices.getCategories();
+      Map<String, dynamic> valueMap = json.decode(response!.body);
+      return categoriesModel = CategoriesModel.fromJson(valueMap);
     } catch (e) {
       print(e.toString());
       return null;
@@ -95,10 +99,11 @@ class LayoutRepository {
     required String phone,
   }) async {
     try {
-      Response? response = await updateProfileServices.updateUserData(
+      var response = await updateProfileServices.updateUserData(
           name: name, email: email, phone: phone);
+      Map<String, dynamic> valueMap = json.decode(response!.body);
 
-      return userModel = LoginModel.fromJson(response!.data);
+      return userModel = LoginModel.fromJson(valueMap);
     } catch (e) {
       print(e.toString());
       return null;

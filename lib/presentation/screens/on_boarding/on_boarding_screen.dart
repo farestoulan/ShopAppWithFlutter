@@ -4,6 +4,7 @@ import 'package:shopapp/core/cubit/cubit.dart';
 import 'package:shopapp/core/network/local/cache_helper.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
+import '../../../config/routes/app_routes.dart';
 import '../../../config/routes/routes.dart';
 import '../../../core/utils/styles/colors.dart';
 import '../../../core/widgets/textButton_widget.dart';
@@ -55,7 +56,9 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
       value: true,
     ).then((value) {
       if (value) {
-        navigateAndFinish(context, LoginScreen());
+        Navigator.of(context).pushNamedAndRemoveUntil(
+            Routes.loginScreen, (Route<dynamic> route) => false);
+        //  navigateAndFinish(context, LoginScreen());
       }
     });
   }

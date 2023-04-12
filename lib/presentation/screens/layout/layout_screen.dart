@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shopapp/business_logic/layout_cubit/cubit_layout.dart';
 import 'package:shopapp/business_logic/layout_cubit/states_layout.dart';
 import 'package:shopapp/presentation/screens/search/search_screen.dart';
-
+import '../../../config/routes/app_routes.dart';
 import '../../../config/routes/routes.dart';
 
 class LayoutScreen extends StatelessWidget {
@@ -21,7 +21,8 @@ class LayoutScreen extends StatelessWidget {
             actions: [
               IconButton(
                 onPressed: () {
-                  navigateTo(context, SearchScreen());
+                  Navigator.pushNamed(context, Routes.searchScreen);
+                  // navigateTo(context, SearchScreen());
                 },
                 icon: Icon(Icons.search),
               ),

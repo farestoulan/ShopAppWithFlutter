@@ -1,15 +1,14 @@
-import 'package:dio/dio.dart';
-import 'package:shopapp/data/web_services/products_web_servises.dart';
-
+import '../../core/network/remot/http_services.dart';
 import '../../core/utils/constants.dart';
 import '../../core/utils/end_points.dart';
+import 'package:http/http.dart' as http;
 
 class UpdateProfileServices {
   final ProductsWebServices productsWebServices;
 
   UpdateProfileServices({required this.productsWebServices});
 
-  Future<Response?> updateUserData({
+  Future<http.Response?> updateUserData({
     required String name,
     required String email,
     required String phone,

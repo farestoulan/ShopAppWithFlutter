@@ -8,6 +8,7 @@ import 'package:shopapp/presentation/screens/register_screen/register_Screen.dar
 import 'package:shopapp/core/utils/constants.dart';
 import 'package:shopapp/core/network/local/cache_helper.dart';
 
+import '../../../config/routes/app_routes.dart';
 import '../../../config/routes/routes.dart';
 import '../../../core/widgets/button_wiget.dart';
 import '../../../core/widgets/showToast_widget.dart';
@@ -35,7 +36,9 @@ class LoginScreen extends StatelessWidget {
               value: state.loginModel.data!.token,
             ).then((value) {
               token = state.loginModel.data!.token!;
-              navigateAndFinish(context, LayoutScreen());
+              Navigator.of(context).pushNamedAndRemoveUntil(
+                  Routes.layoutScreen, (Route<dynamic> route) => false);
+              //navigateAndFinish(context, LayoutScreen());
             });
           } else {
             showToast(
@@ -141,7 +144,9 @@ class LoginScreen extends StatelessWidget {
                           Text('Don\'t have an account? '),
                           defaultTextButton(
                             function: () {
-                              navigateTo(context, RegisterScreen());
+                              Navigator.pushNamed(
+                                  context, Routes.registerScreen);
+                              //  navigateTo(context, RegisterScreen());
                             },
                             text: 'Register',
                           ),

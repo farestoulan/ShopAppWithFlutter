@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shopapp/presentation/screens/layout/layout_screen.dart';
 import 'package:shopapp/presentation/screens/login_screen/login_screen.dart';
 import 'package:shopapp/presentation/screens/register_screen/register_Screen.dart';
+import 'package:shopapp/presentation/screens/search/search_screen.dart';
 
 import '../../core/network/local/cache_helper.dart';
 import '../../core/utils/constants.dart';
@@ -13,6 +14,7 @@ class Routes {
   static const String loginScreen = '/loginScreen';
   static const String registerScreen = '/registerScreen';
   static const String layoutScreen = '/layoutScreen';
+  static const String searchScreen = '/SearchScreen';
 }
 
 class AppRoutes {
@@ -47,6 +49,10 @@ class AppRoutes {
       case Routes.layoutScreen:
         return MaterialPageRoute(builder: (context) {
           return LayoutScreen();
+        });
+      case Routes.searchScreen:
+        return MaterialPageRoute(builder: (context) {
+          return SearchScreen();
         });
 
       default:

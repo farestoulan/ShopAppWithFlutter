@@ -2,6 +2,7 @@ import 'package:conditional_builder_null_safety/conditional_builder_null_safety.
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shopapp/business_logic/register_cubit/states.dart';
+import '../../../config/routes/app_routes.dart';
 import '../../../config/routes/routes.dart';
 import '../layout/layout_screen.dart';
 import '../../../core/utils/constants.dart';
@@ -32,7 +33,9 @@ class RegisterScreen extends StatelessWidget {
               value: state.loginModel.data!.token,
             ).then((value) {
               token = state.loginModel.data!.token!;
-              navigateAndFinish(context, LayoutScreen());
+              Navigator.of(context).pushNamedAndRemoveUntil(
+                  Routes.layoutScreen, (Route<dynamic> route) => false);
+              // navigateAndFinish(context, LayoutScreen());
             });
           } else {
             showToast(
