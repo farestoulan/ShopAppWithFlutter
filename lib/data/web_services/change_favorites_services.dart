@@ -12,12 +12,12 @@ class ChangeFavoritsServices {
     try {
       //  Response response  =
       return await productsWebServices.postData(
-        url: FAVORITES,
-        data: {
-          'product_id': productID.toString(),
-        },
-        token: token,
-      );
+          url: FAVORITES,
+          data: {
+            'product_id': productID.toString(),
+          },
+          token: token,
+          lang: 'ar');
       //  return response.data;
     } catch (e) {
       print(e.toString());

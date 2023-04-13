@@ -31,21 +31,18 @@ class ProductsWebServices {
   Future<http.Response> postData({
     required String url,
     // Map<String, dynamic>? query,
-    required Map<String, dynamic>? data,
+    required Map<String, dynamic> data,
     String lang = 'en',
     String? token,
   }) async {
     var url1 = Uri.parse('$BASE_URL$url');
-    // Map<String, String> requestHeader = {
-    //   'Content-Type': 'application/json',
-    //   'lang': lang,
-    //   'Authorization': token ?? '',
-    // };
+    Map<String, String> requestHeader = {
+      // 'Content-Type': 'application/json',
+      'lang': lang,
+      'Authorization': token ?? '',
+    };
 
-    return await http.post(
-      url1,
-      body: data,
-    );
+    return await http.post(url1, body: data, headers: requestHeader);
   }
 
   Future<http.Response> putData({

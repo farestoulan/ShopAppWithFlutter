@@ -127,9 +127,9 @@ class LayoutCubit extends Cubit<LayoutStates> {
     emit(LayoutChangeFavoritesState());
 
     layoutRepository.changeFavorites(productID: productID).then((value) {
-      changeFavoritesModel = value;
-      print(value);
-      if (!value!.status!) {
+      // changeFavoritesModel = value;
+      print('testValue: ${value!.status}');
+      if (!value.status!) {
         favorites[productID] = favorites[productID]!;
       } else {
         getFavorites();
